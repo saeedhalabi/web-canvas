@@ -1,11 +1,19 @@
+import Header from "@/sections/Header";
+import Hero from "@/sections/Hero";
+import Footer from "@/sections/Footer";
+import { useBuilder } from "@/hooks/useBuilder";
+
 export default function PreviewArea() {
+  const { sections } = useBuilder();
+
   return (
-    <div className="space-y-4 max-w-3xl mx-auto">
-      {[1, 2, 3].map((_, i) => (
-        <div key={i} className="bg-white p-6 rounded shadow">
-          <p className="text-sm text-gray-500">Section {i + 1}</p>
-        </div>
-      ))}
+    <div>
+      {sections.map(({ id, type, props }) => {
+        if (type === "Header") return <Header key={id} {...props} />;
+        if (type === "Hero") return <Hero key={id} {...props} />;
+        if (type === "Footer") return <Footer key={id} {...props} />;
+        return null;
+      })}
     </div>
   );
 }
