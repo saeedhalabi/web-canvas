@@ -25,6 +25,8 @@ import Hero from "@/sections/Hero";
 import Footer from "@/sections/Footer";
 import { useBuilder } from "@/hooks/useBuilder";
 
+import { motion, AnimatePresence } from "framer-motion";
+
 function SortableSection({ id, type, props, isSelected, onSelect }: any) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
@@ -90,18 +92,28 @@ export default function PreviewArea() {
         items={sections.map(s => s.id)}
         strategy={verticalListSortingStrategy}
       >
-        <div className="space-y-4 max-w-3xl mx-auto">
-          {sections.map(({ id, type, props }) => (
-            <SortableSection
-              key={id}
-              id={id}
-              type={type}
-              props={props}
-              isSelected={id === selectedSectionId}
-              onSelect={setSelectedSectionId}
-            />
-          ))}
-        </div>
+        <AnimatePresence>
+          <div className="space-y-2 max-w-3xl mx-auto">
+            {sections.map(({ id, type, props }) => (
+              <motion.div
+                key={id}
+                layout
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+              >
+                <SortableSection
+                  id={id}
+                  type={type}
+                  props={props}
+                  isSelected={id === selectedSectionId}
+                  onSelect={setSelectedSectionId}
+                />
+              </motion.div>
+            ))}
+          </div>
+        </AnimatePresence>
       </SortableContext>
     </DndContext>
   );
