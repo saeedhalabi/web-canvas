@@ -93,7 +93,7 @@ export default function PreviewArea() {
         strategy={verticalListSortingStrategy}
       >
         <AnimatePresence>
-          <div className="space-y-2 max-w-3xl mx-auto">
+          <div className="space-y-2 max-w-3xl mx-auto break-words">
             {sections.map(({ id, type, props }) => (
               <motion.div
                 key={id}

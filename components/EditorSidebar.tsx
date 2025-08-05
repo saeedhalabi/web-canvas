@@ -8,17 +8,25 @@ export default function EditorSidebar() {
   );
 
   if (!selectedSection) {
-    return <div className="p-4 text-gray-500">Select a section to edit</div>;
+    return (
+      <div className="p-6 text-center text-gray-500 italic">
+        Select a section to edit
+      </div>
+    );
   }
 
   const { id, props } = selectedSection;
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-6 p-4 bg-white rounded-md shadow-md">
       <div>
-        <label className="block text-sm font-medium">Title</label>
+        <label htmlFor="title" className="block text-sm font-medium">
+          Title
+        </label>
         <input
+          id="title"
           type="text"
-          className="w-full mt-1 p-2 border rounded"
+          className="w-full mt-1 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
           placeholder="Edit title..."
           value={props.title || ""}
           onChange={e => updateSectionProps(id, { title: e.target.value })}
@@ -26,23 +34,32 @@ export default function EditorSidebar() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium">Description</label>
+        <label htmlFor="description" className="block text-sm font-medium">
+          Description
+        </label>
         <textarea
-          className="w-full mt-1 p-2 border rounded"
+          id="description"
           rows={4}
+          className="w-full mt-1 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
           placeholder="Edit description..."
           value={props.description || ""}
           onChange={e =>
             updateSectionProps(id, { description: e.target.value })
           }
         />
+        <p className="text-xs text-gray-400 mt-1">
+          {props.description?.length || 0} characters
+        </p>
       </div>
 
       <div>
-        <label className="block text-sm font-medium">Image URL</label>
+        <label htmlFor="imageUrl" className="block text-sm font-medium">
+          Image URL
+        </label>
         <input
+          id="imageUrl"
           type="text"
-          className="w-full mt-1 p-2 border rounded"
+          className="w-full mt-1 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
           placeholder="Paste image URL..."
           value={props.imageUrl || ""}
           onChange={e => updateSectionProps(id, { imageUrl: e.target.value })}
@@ -50,7 +67,7 @@ export default function EditorSidebar() {
       </div>
 
       <button
-        className="w-full bg-red-100 hover:bg-red-200 text-red-600 rounded p-2 cursor-pointer"
+        className="w-full border border-red-400 bg-red-50 text-red-600 rounded p-2 hover:bg-red-100 transition"
         onClick={() =>
           setSections(sections.filter(section => section.id !== id))
         }
