@@ -26,9 +26,9 @@ import Footer from "@/sections/Footer";
 import { useBuilder } from "@/hooks/useBuilder";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { SectionType } from "@/types/builder";
+import { SectionType, SectionPropsMap, HeaderProps, HeroProps, FooterProps } from "@/types/builder";
 
-function SortableSection({
+function SortableSection<T extends keyof SectionPropsMap>({
   id,
   type,
   props,
@@ -36,8 +36,8 @@ function SortableSection({
   onSelect,
 }: {
   id: string;
-  type: SectionType;
-  props: any;
+  type: T;
+  props: SectionPropsMap[T];
   isSelected: boolean;
   onSelect: (id: string) => void;
 }) {
@@ -50,9 +50,9 @@ function SortableSection({
   };
 
   let Component = null;
-  if (type === "Header") Component = <Header {...props} />;
-  if (type === "Hero") Component = <Hero {...props} />;
-  if (type === "Footer") Component = <Footer {...props} />;
+  if (type === "Header") Component = <Header {...(props as HeaderProps)} />;
+  if (type === "Hero") Component = <Hero {...(props as HeroProps)} />;
+  if (type === "Footer") Component = <Footer {...(props as FooterProps)} />;
 
   return (
     <div

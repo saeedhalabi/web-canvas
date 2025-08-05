@@ -2,17 +2,42 @@ import React from "react";
 
 export type SectionType = "Header" | "Hero" | "Footer";
 
-export interface SectionInstance {
-  id: string; // for reordering/deleting later
-  type: SectionType;
-  props: any;
+type HeaderProps = {
+  title: string;
+  subtitle?: string;
+};
+
+type HeroProps = {
+  imageUrl: string;
+  callToActionText: string;
+};
+
+type FooterProps = {
+  title?: string;
+  description?: string;
+  imageUrl?: string;
+};
+
+type SectionPropsMap = {
+  Header: HeaderProps;
+  Hero: HeroProps;
+  Footer: FooterProps;
+};
+
+export interface SectionInstance<T extends SectionType = SectionType> {
+  id: string;
+  type: T;
+  props: SectionPropsMap[T];
 }
 
 export interface BuilderContextType {
   sections: SectionInstance[];
-  setSections: React.Dispatch<React.SetStateAction<SectionInstance[]>>; // ← Add this
+  setSections: React.Dispatch<React.SetStateAction<SectionInstance[]>>;
   addSection: (type: SectionType) => void;
   selectedSectionId: string | null;
   setSelectedSectionId: React.Dispatch<React.SetStateAction<string | null>>;
-  updateSectionProps: (id: string, newProps: any) => void;
+  updateSectionProps: <T extends SectionType>(
+    id: string,
+    newProps: SectionPropsMap[T]
+  ) => void;
 }
