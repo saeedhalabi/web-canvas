@@ -26,8 +26,21 @@ import Footer from "@/sections/Footer";
 import { useBuilder } from "@/hooks/useBuilder";
 
 import { motion, AnimatePresence } from "framer-motion";
+import { SectionType } from "@/types/builder";
 
-function SortableSection({ id, type, props, isSelected, onSelect }: any) {
+function SortableSection({
+  id,
+  type,
+  props,
+  isSelected,
+  onSelect,
+}: {
+  id: string;
+  type: SectionType;
+  props: any;
+  isSelected: boolean;
+  onSelect: (id: string) => void;
+}) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
 
