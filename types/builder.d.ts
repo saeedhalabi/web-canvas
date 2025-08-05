@@ -1,24 +1,26 @@
-import React from "react";
-
 export type SectionType = "Header" | "Hero" | "Footer";
 
-type HeaderProps = {
+export type HeaderProps = {
   title: string;
+  description?: string;
+  imageUrl?: string;
   subtitle?: string;
 };
 
-type HeroProps = {
+export type HeroProps = {
+  title: string;
+  description: string;
   imageUrl: string;
   callToActionText: string;
 };
 
-type FooterProps = {
+export type FooterProps = {
   title?: string;
   description?: string;
   imageUrl?: string;
 };
 
-type SectionPropsMap = {
+export type SectionPropsMap = {
   Header: HeaderProps;
   Hero: HeroProps;
   Footer: FooterProps;
@@ -38,6 +40,6 @@ export interface BuilderContextType {
   setSelectedSectionId: React.Dispatch<React.SetStateAction<string | null>>;
   updateSectionProps: <T extends SectionType>(
     id: string,
-    newProps: SectionPropsMap[T]
+    newProps: Partial<SectionPropsMap[T]>
   ) => void;
 }

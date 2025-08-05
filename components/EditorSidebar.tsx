@@ -1,8 +1,10 @@
 import { useBuilder } from "@/hooks/useBuilder";
+import { SectionPropsMap } from "@/types/builder";
 
 export default function EditorSidebar() {
   const { sections, selectedSectionId, updateSectionProps, setSections } =
     useBuilder();
+
   const selectedSection = sections.find(
     section => section.id === selectedSectionId
   );
@@ -15,10 +17,11 @@ export default function EditorSidebar() {
     );
   }
 
-  const { id, props } = selectedSection;
+  const { id, type, props } = selectedSection;
 
   return (
     <div className="space-y-6 p-4 bg-white rounded-md shadow-md">
+      {/* Title input for all */}
       <div>
         <label htmlFor="title" className="block text-sm font-medium">
           Title
@@ -28,11 +31,12 @@ export default function EditorSidebar() {
           type="text"
           className="w-full mt-1 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
           placeholder="Edit title..."
-          value={props.title || ""}
+          value={(props as SectionPropsMap[typeof type]).title || ""}
           onChange={e => updateSectionProps(id, { title: e.target.value })}
         />
       </div>
 
+      {/* Description input for all */}
       <div>
         <label htmlFor="description" className="block text-sm font-medium">
           Description
@@ -42,16 +46,18 @@ export default function EditorSidebar() {
           rows={4}
           className="w-full mt-1 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
           placeholder="Edit description..."
-          value={props.description || ""}
+          value={(props as SectionPropsMap[typeof type]).description || ""}
           onChange={e =>
             updateSectionProps(id, { description: e.target.value })
           }
         />
         <p className="text-xs text-gray-400 mt-1">
-          {props.description?.length || 0} characters
+          {(props as SectionPropsMap[typeof type]).description?.length || 0}{" "}
+          characters
         </p>
       </div>
 
+      {/* Image URL input for all */}
       <div>
         <label htmlFor="imageUrl" className="block text-sm font-medium">
           Image URL
@@ -61,7 +67,7 @@ export default function EditorSidebar() {
           type="text"
           className="w-full mt-1 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
           placeholder="Paste image URL..."
-          value={props.imageUrl || ""}
+          value={(props as SectionPropsMap[typeof type]).imageUrl || ""}
           onChange={e => updateSectionProps(id, { imageUrl: e.target.value })}
         />
       </div>
