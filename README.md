@@ -1,6 +1,6 @@
-# Rekaz Website Builder
+# WebCanvas
 
-Rekaz Website Builder is a user-friendly tool designed to help you create, customize, and deploy modern websites with ease.
+WebCanvas is a user-friendly tool designed to help you create, customize, and deploy modern websites with ease.
 
 ## Features
 
@@ -14,8 +14,8 @@ Rekaz Website Builder is a user-friendly tool designed to help you create, custo
 
 1. **Clone the repository:**
   ```bash
-  git clone https://github.com/saeedhalabi/rekaz-website-builder.git
-  cd rekaz-website-builder
+  git clone https://github.com/saeedhalabi/web-canvas.git
+  cd web-canvas
   ```
 
 2. **Install dependencies:**
