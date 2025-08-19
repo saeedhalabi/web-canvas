@@ -23,7 +23,7 @@ export default function ImportButton() {
 
   return (
     <label
-      className="px-4 py-2 bg-yellow-100 hover:bg-yellow-200 rounded cursor-pointer"
+      className="px-4 py-[9] bg-yellow-100 hover:bg-yellow-200 rounded cursor-pointer"
       onClick={() => fileInputRef.current?.click()}
     >
       📥 Import

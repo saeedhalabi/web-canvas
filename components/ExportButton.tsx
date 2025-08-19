@@ -21,7 +21,7 @@ export default function ExportButton() {
   return (
     <label
       onClick={handleExport}
-      className="inline-block px-4 py-[9px] bg-green-300 hover:bg-green-200 rounded cursor-pointer text-sm"
+      className="inline-block px-4 py-2 bg-green-300 hover:bg-green-200 rounded cursor-pointer text-sm"
     >
       📤 Export
     </label>
