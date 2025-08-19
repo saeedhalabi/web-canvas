@@ -26,7 +26,13 @@ import Footer from "@/sections/Footer";
 import { useBuilder } from "@/hooks/useBuilder";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { SectionType, SectionPropsMap, HeaderProps, HeroProps, FooterProps } from "@/types/builder";
+import {
+  SectionType,
+  SectionPropsMap,
+  HeaderProps,
+  HeroProps,
+  FooterProps,
+} from "@/types/builder";
 
 function SortableSection<T extends keyof SectionPropsMap>({
   id,
@@ -67,7 +73,7 @@ function SortableSection<T extends keyof SectionPropsMap>({
       <div
         {...attributes}
         {...listeners}
-        className="cursor-move mb-2 p-1 inline-block text-gray-400 hover:text-gray-700"
+        className="cursor-move mb-2 p-1 inline-block text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded"
         onClick={e => e.stopPropagation()} // prevent selecting when dragging
         title="Drag to reorder"
       >

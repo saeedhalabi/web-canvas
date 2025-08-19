@@ -20,7 +20,7 @@ export default function EditorSidebar() {
   const { id, type, props } = selectedSection;
 
   return (
-    <div className="space-y-6 p-4 bg-white rounded-md shadow-md">
+    <div className="space-y-6 p-4 bg-white rounded-md shadow-md mx-2">
       {/* Title input for all */}
       <div>
         <label htmlFor="title" className="block text-sm font-medium">

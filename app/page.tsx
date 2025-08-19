@@ -13,14 +13,14 @@ export default function Home() {
       <aside className="w-full lg:w-64 bg-white border-b lg:border-b-0 lg:border-r p-4 flex-shrink-0">
         <h2 className="text-lg font-semibold mb-4">Section Library</h2>
         <SectionLibrary />
-        <div className="mt-6 space-x-2 text-center">
+        <div className="mt-6 flex justify-center gap-2">
           <ExportButton />
           <ImportButton />
         </div>
       </aside>
 
       {/* Preview */}
-      <section className="flex-1 overflow-y-auto bg-gray-100 p-6">
+      <section className="flex-1 overflow-y-auto bg-gray-100 p-6 sm:p-8">
         <div className="max-w-3xl mx-auto space-y-4">
           <PreviewArea />
         </div>
