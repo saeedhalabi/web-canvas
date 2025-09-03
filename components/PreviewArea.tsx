@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   DndContext,
   closestCenter,
@@ -8,24 +9,20 @@ import {
   useSensors,
   DragEndEvent,
 } from "@dnd-kit/core";
-
 import {
   SortableContext,
   verticalListSortingStrategy,
   arrayMove,
   useSortable,
 } from "@dnd-kit/sortable";
-
 import { CSS } from "@dnd-kit/utilities";
-
 import { FiMove } from "react-icons/fi";
+import { motion, AnimatePresence } from "framer-motion";
 
 import Header from "@/sections/Header";
 import Hero from "@/sections/Hero";
 import Footer from "@/sections/Footer";
 import { useBuilder } from "@/hooks/useBuilder";
-
-import { motion, AnimatePresence } from "framer-motion";
 import {
   SectionType,
   SectionPropsMap,
@@ -64,8 +61,8 @@ function SortableSection<T extends keyof SectionPropsMap>({
     <div
       ref={setNodeRef}
       style={style}
-      className={`border p-2 rounded-md bg-white cursor-pointer ${
-        isSelected ? "border-blue-500" : "border-transparent"
+      className={`group relative border p-4 rounded-xl bg-white shadow-sm transition hover:shadow-md cursor-pointer ${
+        isSelected ? "border-blue-500 ring-2 ring-blue-200" : "border-gray-200"
       }`}
       onClick={() => onSelect(id)}
     >
@@ -73,14 +70,15 @@ function SortableSection<T extends keyof SectionPropsMap>({
       <div
         {...attributes}
         {...listeners}
-        className="cursor-move mb-2 p-1 inline-block text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded"
-        onClick={e => e.stopPropagation()} // prevent selecting when dragging
+        className="absolute -top-3 -left-3 bg-white border border-gray-300 rounded-full p-1 text-gray-400 group-hover:text-gray-600 group-hover:shadow-md transition cursor-grab z-10"
+        onClick={e => e.stopPropagation()}
         title="Drag to reorder"
       >
-        <FiMove size={18} />
+        <FiMove size={16} />
       </div>
 
-      {Component}
+      {/* Section preview */}
+      <div className="pointer-events-none">{Component}</div>
     </div>
   );
 }
@@ -88,6 +86,10 @@ function SortableSection<T extends keyof SectionPropsMap>({
 export default function PreviewArea() {
   const { sections, setSections, selectedSectionId, setSelectedSectionId } =
     useBuilder();
+
+  const [viewport, setViewport] = useState<"desktop" | "tablet" | "mobile">(
+    "desktop"
+  );
 
   const sensors = useSensors(useSensor(PointerSensor));
 
@@ -102,38 +104,72 @@ export default function PreviewArea() {
   }
 
   return (
-    <DndContext
-      sensors={sensors}
-      collisionDetection={closestCenter}
-      onDragEnd={handleDragEnd}
-    >
-      <SortableContext
-        items={sections.map(s => s.id)}
-        strategy={verticalListSortingStrategy}
+    <>
+      {/* Viewport Switcher */}
+      <div className="flex justify-center gap-2 mb-4">
+        {(["desktop", "tablet", "mobile"] as const).map(mode => (
+          <button
+            key={mode}
+            onClick={() => setViewport(mode)}
+            className={`px-4 py-1 rounded border text-sm font-medium transition 
+              ${
+                viewport === mode
+                  ? "bg-blue-500 text-white border-blue-600"
+                  : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
+              }`}
+          >
+            {mode === "desktop" && "🖥 Desktop"}
+            {mode === "tablet" && "📱 Tablet"}
+            {mode === "mobile" && "📱 Mobile"}
+          </button>
+        ))}
+      </div>
+
+      {/* Canvas Preview */}
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
       >
-        <AnimatePresence>
-          <div className="space-y-2 max-w-3xl mx-auto break-words">
-            {sections.map(({ id, type, props }) => (
-              <motion.div
-                key={id}
-                layout
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.2 }}
-              >
-                <SortableSection
-                  id={id}
-                  type={type}
-                  props={props}
-                  isSelected={id === selectedSectionId}
-                  onSelect={setSelectedSectionId}
-                />
-              </motion.div>
-            ))}
-          </div>
-        </AnimatePresence>
-      </SortableContext>
-    </DndContext>
+        <SortableContext
+          items={sections.map(s => s.id)}
+          strategy={verticalListSortingStrategy}
+        >
+          <AnimatePresence>
+            <div
+              className={`
+                mx-auto w-full px-2 sm:px-4 md:px-6 py-6 transition-all duration-300
+                ${
+                  viewport === "desktop"
+                    ? "max-w-4xl"
+                    : viewport === "tablet"
+                    ? "max-w-md"
+                    : "max-w-xs"
+                }
+              `}
+            >
+              {sections.map(({ id, type, props }) => (
+                <motion.div
+                  key={id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <SortableSection
+                    id={id}
+                    type={type}
+                    props={props}
+                    isSelected={id === selectedSectionId}
+                    onSelect={setSelectedSectionId}
+                  />
+                </motion.div>
+              ))}
+            </div>
+          </AnimatePresence>
+        </SortableContext>
+      </DndContext>
+    </>
   );
 }
