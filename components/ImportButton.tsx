@@ -12,21 +12,29 @@ export default function ImportButton() {
     const reader = new FileReader();
     reader.onload = e => {
       try {
-        const data = JSON.parse(e.target?.result as string);
+        const text = e.target?.result as string;
+        const data = JSON.parse(text);
+
+        if (!Array.isArray(data)) throw new Error("Invalid section format");
+
         setSections(data);
+        alert("✅ Sections imported successfully!");
       } catch (error) {
-        console.error("Failed to parse JSON:", error);
+        console.error("Import failed:", error);
+        alert("❌ Failed to import. Make sure it's a valid JSON file.");
       }
     };
     reader.readAsText(file);
   }
 
   return (
-    <label
-      className="px-4 py-[9] bg-yellow-100 hover:bg-yellow-200 rounded cursor-pointer"
-      onClick={() => fileInputRef.current?.click()}
-    >
-      📥 Import
+    <>
+      <label
+        className="inline-block px-4 py-2 bg-yellow-200 hover:bg-yellow-300 text-sm rounded cursor-pointer transition"
+        onClick={() => fileInputRef.current?.click()}
+      >
+        📥 Import
+      </label>
       <input
         type="file"
         accept=".json"
@@ -34,6 +42,6 @@ export default function ImportButton() {
         className="hidden"
         onChange={handleFileChange}
       />
-    </label>
+    </>
   );
 }

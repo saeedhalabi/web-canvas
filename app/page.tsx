@@ -11,7 +11,6 @@ export default function Home() {
     <main className="flex flex-col lg:flex-row min-h-screen">
       {/* Section Library */}
       <aside className="w-full lg:w-64 bg-white border-b lg:border-b-0 lg:border-r p-4 flex-shrink-0">
-        <h2 className="text-lg font-semibold mb-4">Section Library</h2>
         <SectionLibrary />
         <div className="mt-6 flex justify-center gap-2">
           <ExportButton />
