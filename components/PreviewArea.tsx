@@ -78,7 +78,7 @@ function SortableSection<T extends keyof SectionPropsMap>({
       </div>
 
       {/* Section preview */}
-      <div className="pointer-events-none">{Component}</div>
+      <div className="pointer-events-none break-words overflow-hidden">{Component}</div>
     </div>
   );
 }
