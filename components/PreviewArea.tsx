@@ -36,7 +36,37 @@ import {
   ComputerDesktopIcon,
 } from "@heroicons/react/24/outline";
 
-function SortableSection<T extends keyof SectionPropsMap>({
+// Helper to get the right section component
+function getSectionComponent(
+  type: SectionType,
+  props: SectionPropsMap[keyof SectionPropsMap]
+) {
+  if (type === "Header") return <Header {...(props as HeaderProps)} />;
+  if (type === "Hero") return <Hero {...(props as HeroProps)} />;
+  if (type === "Footer") return <Footer {...(props as FooterProps)} />;
+  return null;
+}
+
+// Viewport switcher button
+function ViewportButton({ mode, selected, onClick, children }: any) {
+  return (
+    <button
+      onClick={() => onClick(mode)}
+      className={`px-4 py-1 rounded border text-sm font-medium transition 
+        ${
+          selected
+            ? "bg-blue-500 text-white border-blue-600"
+            : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
+        }`}
+      aria-pressed={selected}
+    >
+      {children}
+    </button>
+  );
+}
+
+// Sortable section item
+function SortableSection({
   id,
   type,
   props,
@@ -44,8 +74,8 @@ function SortableSection<T extends keyof SectionPropsMap>({
   onSelect,
 }: {
   id: string;
-  type: T;
-  props: SectionPropsMap[T];
+  type: SectionType;
+  props: SectionPropsMap[keyof SectionPropsMap];
   isSelected: boolean;
   onSelect: (id: string) => void;
 }) {
@@ -57,11 +87,6 @@ function SortableSection<T extends keyof SectionPropsMap>({
     transition,
   };
 
-  let Component = null;
-  if (type === "Header") Component = <Header {...(props as HeaderProps)} />;
-  if (type === "Hero") Component = <Hero {...(props as HeroProps)} />;
-  if (type === "Footer") Component = <Footer {...(props as FooterProps)} />;
-
   return (
     <div
       ref={setNodeRef}
@@ -70,6 +95,8 @@ function SortableSection<T extends keyof SectionPropsMap>({
         isSelected ? "border-blue-500 ring-2 ring-blue-200" : "border-gray-200"
       }`}
       onClick={() => onSelect(id)}
+      tabIndex={0}
+      aria-selected={isSelected}
     >
       {/* Drag handle */}
       <div
@@ -78,13 +105,14 @@ function SortableSection<T extends keyof SectionPropsMap>({
         className="absolute -top-3 -left-3 bg-white border border-gray-300 rounded-full p-1 text-gray-400 group-hover:text-gray-600 group-hover:shadow-md transition cursor-grab z-10"
         onClick={e => e.stopPropagation()}
         title="Drag to reorder"
+        tabIndex={-1}
+        aria-label="Drag to reorder"
       >
         <FiMove size={16} />
       </div>
-
       {/* Section preview */}
       <div className="pointer-events-none break-words overflow-hidden">
-        {Component}
+        {getSectionComponent(type, props)}
       </div>
     </div>
   );
@@ -105,46 +133,46 @@ export default function PreviewArea() {
     if (active.id !== over?.id) {
       const oldIndex = sections.findIndex(s => s.id === active.id);
       const newIndex = sections.findIndex(s => s.id === over?.id);
-      const newSections = arrayMove(sections, oldIndex, newIndex);
-      setSections(newSections);
+      setSections(arrayMove(sections, oldIndex, newIndex));
     }
   }
+
+  // Set max width based on viewport
+  const maxWidth =
+    viewport === "desktop"
+      ? "max-w-4xl"
+      : viewport === "tablet"
+      ? "max-w-md"
+      : "max-w-xs";
 
   return (
     <>
       {/* Viewport Switcher */}
       <div className="flex justify-center gap-2 mb-4">
-        {(["desktop", "tablet", "mobile"] as const).map(mode => (
-          <button
-            key={mode}
-            onClick={() => setViewport(mode)}
-            className={`px-4 py-1 rounded border text-sm font-medium transition 
-              ${
-                viewport === mode
-                  ? "bg-blue-500 text-white border-blue-600"
-                  : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
-              }`}
-          >
-            {mode === "desktop" && (
-              <>
-                <ComputerDesktopIcon className="w-5 h-5 inline mr-1" />
-                Desktop
-              </>
-            )}
-            {mode === "tablet" && (
-              <>
-                <DeviceTabletIcon className="w-5 h-5 inline mr-1" />
-                Tablet
-              </>
-            )}
-            {mode === "mobile" && (
-              <>
-                <DevicePhoneMobileIcon className="w-5 h-5 inline mr-1" />
-                Mobile
-              </>
-            )}
-          </button>
-        ))}
+        <ViewportButton
+          mode="desktop"
+          selected={viewport === "desktop"}
+          onClick={setViewport}
+        >
+          <ComputerDesktopIcon className="w-5 h-5 inline mr-1" />
+          Desktop
+        </ViewportButton>
+        <ViewportButton
+          mode="tablet"
+          selected={viewport === "tablet"}
+          onClick={setViewport}
+        >
+          <DeviceTabletIcon className="w-5 h-5 inline mr-1" />
+          Tablet
+        </ViewportButton>
+        <ViewportButton
+          mode="mobile"
+          selected={viewport === "mobile"}
+          onClick={setViewport}
+        >
+          <DevicePhoneMobileIcon className="w-5 h-5 inline mr-1" />
+          Mobile
+        </ViewportButton>
       </div>
 
       {/* Canvas Preview */}
@@ -161,13 +189,7 @@ export default function PreviewArea() {
             <div
               className={`
                 mx-auto w-full px-2 sm:px-4 md:px-6 py-6 transition-all duration-300
-                ${
-                  viewport === "desktop"
-                    ? "max-w-4xl"
-                    : viewport === "tablet"
-                    ? "max-w-md"
-                    : "max-w-xs"
-                }
+                ${maxWidth}
               `}
             >
               {sections.map(({ id, type, props }) => (
