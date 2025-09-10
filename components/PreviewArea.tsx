@@ -30,6 +30,11 @@ import {
   HeroProps,
   FooterProps,
 } from "@/types/builder";
+import {
+  DevicePhoneMobileIcon,
+  DeviceTabletIcon,
+  ComputerDesktopIcon,
+} from "@heroicons/react/24/outline";
 
 function SortableSection<T extends keyof SectionPropsMap>({
   id,
@@ -78,7 +83,9 @@ function SortableSection<T extends keyof SectionPropsMap>({
       </div>
 
       {/* Section preview */}
-      <div className="pointer-events-none break-words overflow-hidden">{Component}</div>
+      <div className="pointer-events-none break-words overflow-hidden">
+        {Component}
+      </div>
     </div>
   );
 }
@@ -118,9 +125,24 @@ export default function PreviewArea() {
                   : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
               }`}
           >
-            {mode === "desktop" && "🖥 Desktop"}
-            {mode === "tablet" && "📱 Tablet"}
-            {mode === "mobile" && "📱 Mobile"}
+            {mode === "desktop" && (
+              <>
+                <ComputerDesktopIcon className="w-5 h-5 inline mr-1" />
+                Desktop
+              </>
+            )}
+            {mode === "tablet" && (
+              <>
+                <DeviceTabletIcon className="w-5 h-5 inline mr-1" />
+                Tablet
+              </>
+            )}
+            {mode === "mobile" && (
+              <>
+                <DevicePhoneMobileIcon className="w-5 h-5 inline mr-1" />
+                Mobile
+              </>
+            )}
           </button>
         ))}
       </div>
