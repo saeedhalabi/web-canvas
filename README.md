@@ -79,21 +79,6 @@ npm run lint
 tsc --noEmit
 ```
 
-
-  ## Features
-
-  - Drag & drop section builder (powered by @dnd-kit)
-  - Responsive previews and simple section components
-  - Real-time preview while editing
-  - Export/import project sections
-
-  ## Tech stack
-
-  - Next.js (App Router)
-  - React + TypeScript
-  - Tailwind CSS
-  - @dnd-kit for drag & drop
-
   
   ## Development
 
@@ -125,13 +110,9 @@ tsc --noEmit
 
 ## Screenshots
 
-### Builder Interface
 ![Builder interface showing the drag-and-drop section editor](./screenshots/section-layout.jpg)
-*The main builder interface lets you drag sections, edit content, and arrange your page layout.*
 
-### Responsive Preview
 ![Responsive design preview across different device sizes](./screenshots/responsive-layout.jpg)
-*Preview your design across mobile, tablet, and desktop views to ensure perfect responsiveness.*
 
 ## Contributing
 
