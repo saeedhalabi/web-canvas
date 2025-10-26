@@ -12,7 +12,7 @@
 - [Tech Stack](#tech-stack)
 - [Quick Start](#quick-start)
 - [Development](#development)
-- [Project Structure](#project-structure)
+- [Project Structure](#project-structure-important-files)
 - [Usage](#usage)
 - [Screenshots](#screenshots)
 - [Contributing](#contributing)
