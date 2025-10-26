@@ -4,7 +4,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.0-38bdf8)](https://tailwindcss.com/)
 
-**WebCanvas** is a modern, drag-and-drop website builder powered by Next.js and TypeScript. Create, customize, and preview responsive websites with an intuitive interface. Perfect for developers and designers who want to quickly prototype landing pages or learn about building a drag-and-drop editor.
+**WebCanvas** is a modern, section-based website builder powered by Next.js and TypeScript. It lets you create and customize responsive pages with an intuitive interface. drag sections to rearrange them, edit their content in real time, and preview your design instantly. Perfect for developers and designers who want to quickly prototype landing pages or explore building a lightweight page editor.
 
 ## Table of Contents
 
@@ -21,7 +21,7 @@
 
 ## Features
 
-- 🧩 **Drag & Drop Builder** – Intuitive interface to easily design layouts
+- 🧩 Drag & Reorder Sections – Intuitive interface to rearrange your page layout easily
 - 📱 **Responsive Templates** – Build websites that look great on any device
 - ⚙️ **Customizable Components** – Personalize every element to your liking
 - 👀 **Real-Time Preview** – See your changes instantly as you edit
