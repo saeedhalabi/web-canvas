@@ -12,7 +12,7 @@
 - [Tech Stack](#tech-stack)
 - [Quick Start](#quick-start)
 - [Development](#development)
-- [Project Structure](#project-structure-important-files)
+- [Project Structure](#project-structure)
 - [Usage](#usage)
 - [Screenshots](#screenshots)
 - [Contributing](#contributing)
@@ -79,16 +79,6 @@ npm run lint
 tsc --noEmit
 ```
 
-## Development
-
-  - [Features](#features)
-  - [Tech stack](#tech-stack)
-  - [Quick start](#quick-start)
-  - [Development](#development)
-  - [Project structure](#project-structure)
-  - [Usage](#usage)
-  - [Screenshots](#screenshots)
-  - [Contributing](#contributing)
 
   ## Features
 
@@ -117,7 +107,7 @@ tsc --noEmit
   2. Export the section so it appears in the editor's library.
   3. Add any styles or assets to `public/` or the `components/` folder.
 
-  ## Project structure (important files)
+  ## Project structure
 
   - `app/` — Next.js App Router entry (pages/layouts)
   - `components/` — UI components and editor pieces
