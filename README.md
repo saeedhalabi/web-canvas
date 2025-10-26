@@ -12,7 +12,7 @@
 
 ## 🛠️ Tech Stack
 
-**Frontend:** React, TypeScript, CSS, Tailwind CSS    
+**Frontend:** React, TypeScript, CSS, Tailwind CSS, Context API.    
 **Deployment:** Netlify  
 
 ## Getting Started
